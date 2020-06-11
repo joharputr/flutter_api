@@ -24,6 +24,20 @@ class User {
     return User.fromJson(userData);
   }
 
+    static Future<List<User>> getUsersList(String id) async {
+    String apiURL = "https://reqres.in/api/users?page=" + id;
+    var response = await http.get(apiURL);
+    var jsonObject = json.decode(response.body);
+    List<dynamic> listUser = (jsonObject as Map<String, dynamic>)['data'];
+
+    List<User> users = [];
+    for (int i = 0; i < listUser.length; i++) {
+      users.add(User.fromJson(listUser[i]));
+    }
+    return users;
+  }
+  
+
   static Future<bool> isConnected() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile ||

@@ -1,34 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hello_word/model/post_model.dart';
-import 'package:hello_word/ui/home/FormEditData.dart';
 
-void main() => runApp(FormPage());
+void main() => runApp(FormEditData());
 
-class FormPage extends StatefulWidget {
+class FormEditData extends StatefulWidget {
   @override
-  _FormPageState createState() => _FormPageState();
+  _FormEditDataState createState() => _FormEditDataState();
 }
 
-//http://www.codeplayon.com/2020/02/simple-flutter-login-screen-ui-example/
-class _FormPageState extends State<FormPage> {
+class _FormEditDataState extends State<FormEditData> {
   TextEditingController nameController = TextEditingController();
   TextEditingController jobController = TextEditingController();
   PostModel postModel = null;
-
-  void handleclickAppbar(String value) {
-    switch (value) {
-      case 'Edit Data':
-        {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => FormEditData()),
-          );
-        }
-        break;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -36,20 +19,7 @@ class _FormPageState extends State<FormPage> {
         resizeToAvoidBottomPadding: false,
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          title: Text('Popup Menu Button'),
-          actions: <Widget>[
-            PopupMenuButton<String>(
-              onSelected: handleclickAppbar,
-              itemBuilder: (BuildContext context) {
-                return {'Edit Data'}.map((String choice) {
-                  return PopupMenuItem<String>(
-                    value: choice,
-                    child: Text(choice),
-                  );
-                }).toList();
-              },
-            ),
-          ],
+          title: Text('Edit Data'),
         ),
         body: Padding(
           padding: EdgeInsets.all(10),
@@ -59,7 +29,7 @@ class _FormPageState extends State<FormPage> {
                 alignment: Alignment.center,
                 padding: EdgeInsets.all(10),
                 child: Text(
-                  "Input Data",
+                  "Edit Data",
                   style: TextStyle(color: Colors.blue, fontSize: 30),
                 ),
               ),
@@ -85,29 +55,22 @@ class _FormPageState extends State<FormPage> {
                 child: RaisedButton(
                     color: Colors.blue,
                     textColor: Colors.white,
-                    child: Text("Post Data"),
+                    child: Text("Edit Data"),
                     onPressed: () {
-                      PostModel.connectToApi(
-                              nameController.text, jobController.text)
+                      PostModel.editData(2.toString(), nameController.text,
+                              jobController.text)
                           .then((value) {
                         postModel = value;
                         setState(() {});
                       });
-                      Fluttertoast.showToast(
-                          msg: nameController.text,
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 1,
-                          backgroundColor: Colors.red,
-                          textColor: Colors.black,
-                          fontSize: 16.0);
                     }),
               ),
               Container(
                 margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
                 alignment: Alignment.center,
-                child: Text(
-                    (postModel == null) ? "tidak ada data" : postModel.name),
+                child: Text((postModel == null)
+                    ? "tidak ada "
+                    : postModel.name),
               ),
             ],
           ),

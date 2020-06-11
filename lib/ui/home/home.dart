@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hello_word/ui/home/FormInsertData.dart';
+import 'package:hello_word/ui/home/GetListActivity.dart';
 import 'package:hello_word/ui/main.dart';
 
 void main() => runApp(Home());
@@ -8,7 +10,7 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-var tabs = [Text("sd"), Main(), Text("3")];
+List tabs = [new FormInsertData(),new Main(), new GetListActivity()];
 
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
@@ -28,7 +30,7 @@ class _HomeState extends State<Home> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.access_alarms), title: Text("alarm")),
             BottomNavigationBarItem(
-                icon: Icon(Icons.star), title: Text("stars"))
+                icon: Icon(Icons.star), title: Text("List"))
           ],
           onTap: (index) {
             setState(() {
